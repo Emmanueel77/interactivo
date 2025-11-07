@@ -76,6 +76,9 @@
             flex: 1; 
             min-width: 250px; 
             max-height: calc(100vh - 160px); 
+            display: flex; 
+            flex-direction: column;
+            justify-content: space-between; 
         }
 
         .subcontenido2 {
@@ -83,14 +86,25 @@
             flex-direction:row;
             flex-wrap:wrap;
             justify-content:center;
+            flex-grow: 1; 
+            align-items: center; 
+        }
+
+        #info-container, #resultado {
+            display:flex; 
+            flex-direction: column;
+            flex-grow: 1; 
+            width: 100%;
+            height: 100%; 
+            align-items: center;
+            justify-content: center; 
+            text-align: center;
         }
 
         #resultado {
-            display:flex;
-            flex-direction:column;
-            flex-wrap:wrap;
-            align-items: center;
-            margin-top: 10px; 
+            padding: 10px;
+            background-color: rgba(255, 255, 255, 0.2); 
+            border-radius: 8px;
         }
 
         #footer {
@@ -102,6 +116,8 @@
             display:flex;
             flex-flow:row;
             margin: 5px;
+            justify-content: space-around;
+            align-items: center;
         }
 
         .pie {
@@ -137,16 +153,16 @@
             border: 2px solid white;
         }
 
-        #hs1 { top: 12%; left: 30%; }    
-        #hs2 { top: 12%; left: 50%; }      
-        #hs3 { top: 12%; left: 70%; }    
+        #hs1 { top: 12%; left: 30%; } 	
+        #hs2 { top: 12%; left: 50%; } 	 
+        #hs3 { top: 12%; left: 70%; } 	
         
-        #hs4 { top: 48%; left: 30%; }      
-        #hs5 { top: 48%; left: 50%; }        
-        #hs6 { top: 48%; left: 70%; }      
+        #hs4 { top: 48%; left: 30%; } 	 
+        #hs5 { top: 48%; left: 50%; } 	 	
+        #hs6 { top: 48%; left: 70%; } 	 
         
-        #hs7 { top: 85%; left: 30%; }  
-        #hs8 { top: 85%; left: 50%; }        
+        #hs7 { top: 85%; left: 30%; } 	
+        #hs8 { top: 85%; left: 50%; } 	 	
         #hs9 { top: 85%; left: 70%; }
 
         .texto-rojo{
@@ -165,12 +181,26 @@
             font-size: 1.1em; 
         }
 
-        #instrucciones img, #prueba img {
-            width: 50px; 
+        #instrucciones, #prueba {
+            cursor: pointer;
+            font-weight: bold;
+            padding: 5px 10px;
+            border-radius: 5px;
+            color: #333;
+            width: 100px; 
+            height: 40px;
+        }
+        
+        #instrucciones:hover, #prueba:hover {
+            background-color: #ccc;
+        }
+
+        .oculto {
+            display: none !important;
         }
     </style>
 </head>
-<body>
+<body onload="mostrarInstruccionesIniciales()">
     <div id="header">
         <div class="nav" style="text-align:center;">
             <h3>F1: Conoce a las Escuderías</h3>
@@ -196,81 +226,82 @@
         </div>
         
         <div class="contenido">
-            <div class="subcontenido1">
-                <h2 id="titulo-info">Alpine F1 Team (1)</h2>
-                <p id="texto-info">Escudería francesa conocida por su espíritu deportivo y su distintivo color azul. Antiguamente fue el equipo Renault.</p>
-            </div>
-            
-            <div class="subcontenido2">
-                <div class="proyecto">
-                    <img id="imagen-info" src="images/hotspot-cursor.png" alt="Imagen info" style="width:100%; height:100%; border-radius:10px;">
+            <div id="info-container">
+                <div class="subcontenido1">
+                    <h2 id="titulo-info">Instrucciones: Conoce las Escuderías</h2>
+                    <p id="texto-info">Haz clic sobre los círculos numerados de los logos para ver la información de cada escudería. Luego, haz la prueba de conocimientos.</p>
+                </div>
+                
+                <div class="subcontenido2">
+                    <div class="proyecto">
+                        <img id="imagen-info" src="bandera.jpg" alt="Imagen info" style="width:100%; height:100%; border-radius:10px;">
+                    </div>
                 </div>
             </div>
             
-            <div id="resultado" class="invisible">
+            <div id="resultado" class="oculto">
                 <h2>Tu resultado:</h2>
                 <span id="calif" class="texto-rojo">0/0</span>
-                <img id="imagen-resultado" width="100px" src="images/ping.gif" /> 
-            </div>      
+                <img id="imagen-resultado" width="100px" src="checo.jpg" /> 
+            </div> 	 	
+
         </div>
     </div>
     
     <div id="footer">
-        <div id="instrucciones"><img width="100px" src="images/instrucciones.png" /></div>
-        <div id="prueba"><img width="100px" src="images/test.png" /></div>
+        <div id="instrucciones">Instrucciones</div>
+        <div id="prueba">Iniciar Prueba</div>
     </div>
     
     <script type="text/javascript">
         let puntaje = 0;
-        let pregunta1 = "";
-        let pregunta2 = "";
-        let totalPreguntas = 2; 
+        let totalPreguntas = 9; 
         
         const info = {
             'hs1': {
-                titulo: 'Alpine F1 Team (1)',
-                texto: 'Escudería francesa conocida por su espíritu deportivo y su distintivo color azul. Antiguamente fue el equipo Renault.',
-                imagen: 'images/alpine.png' 
+                titulo: 'Alpine F1',
+                texto: 'Escudería francesa conocida por su espíritu deportivo y su distintivo color azul. Antiguamente fue el equipo Renault sus pilotos actuales son Pierre Gasly y Jack Doohan.',
+                imagen: 'autoalpine.jpg' 
             },
             'hs2': {
-                titulo: 'Aston Martin (2)',
-                texto: 'Equipo británico con sede en Silverstone, que compite con un característico color verde. Tienen grandes ambiciones a futuro.',
-                imagen: 'images/astonmartin.png' 
+                titulo: 'Aston Martin',
+                texto: 'Equipo británico con sede en Silverstone, que compite con un característico color verde. Tienen grandes ambiciones a futuro sus pilotos actuales son Fernando Alonso y Lance Stroll.',
+                imagen: 'autoastonmartin.jpg' 
             },
             'hs3': {
-                titulo: 'Haas F1 Team (3)',
-                texto: 'El único equipo con base en Estados Unidos. Suele utilizar motores Ferrari y se enfoca en la eficiencia operativa.',
-                imagen: 'images/haas.png'
+                titulo: 'Haas',
+                texto: 'El único equipo con base en Estados Unidos. Suele utilizar motores Ferrari y se enfoca en la eficiencia operativa sus pilotos actuales son Oliver Bearman y Esteban Ocon.',
+                imagen: 'autohaas.jpg'
             },
             'hs4': {
-                titulo: 'Mercedes-AMG PETRONAS F1 (4)',
-                texto: 'Dominaron la era híbrida de la Fórmula 1. Su color principal es el plateado o negro, y son conocidos por su ingeniería.',
-                imagen: 'images/mercedes.png'
+                titulo: 'Mercedes  ',
+                texto: 'Dominaron la era híbrida de la Fórmula 1. Su color principal es el plateado o negro, y son conocidos por su ingeniería sus pilotos actuales son George Russell	y Kimi Antonelli.',
+                imagen: 'automercedes.jpg'
             },
             'hs5': {
-                titulo: 'Oracle Red Bull Racing (5)',
-                texto: 'Con sede en Milton Keynes, es uno de los equipos más exitosos de la última década, conocido por su diseño agresivo y velocidad.',
-                imagen: 'images/redbull.png'
+                titulo: 'Oracle Red Bull Racing ',
+                texto: 'Con sede en Milton Keynes, es uno de los equipos más exitosos de la última década, conocido por su diseño agresivo y velocidad sus pilotos actuales son Max Verstappen y Yuki Tsunoda.',
+                imagen: 'autoredbull.jpg'
             },
             'hs6': {
-                titulo: 'McLaren Formula 1 Team (6)',
-                texto: 'Una de las escuderías más antiguas y legendarias. Su color icónico es el naranja papaya. Tienen base en Woking, Reino Unido.',
-                imagen: 'images/mclaren.png'
+                titulo: 'McLaren',
+                texto: 'Una de las escuderías más antiguas y legendarias. Su color icónico es el naranja papaya. Tienen base en Woking, Reino Unido sus pilotos actuales son Lando Norris y Oscar Piastri.',
+                imagen: 'automclaren.jpg'
             },
             'hs7': {
-                titulo: 'Williams Racing (7)',
-                texto: 'Otro equipo histórico, conocido por ser uno de los más laureados en el pasado. Se distingue por su color azul oscuro.',
-                imagen: 'images/williams.png'
+                titulo: 'Williams Racing',
+                texto: 'Otro equipo histórico, conocido por ser uno de los más laureados en el pasado. Se distingue por su color azul oscuro sus pilotos actuales son Alexander Albon y Carlos Sainz.',
+                imagen: 'autowilliams.jpg'
             },
             'hs8': {
-                titulo: 'Scuderia Ferrari (8)',
-                texto: 'La escudería más famosa y antigua de la F1. El equipo italiano es sinónimo de su color rojo y su sede en Maranello.',
-                imagen: 'images/ferrari.png'
+                titulo: 'Scuderia Ferrari ',
+                texto: 'La escudería más famosa y antigua de la F1. El equipo italiano es sinónimo de su color rojo y su sede en Maranello sus pilotos actuales son Charles Leclerc	y Lewis Hamilton.',
+                imagen: 'autoferrari.jpg'
             },
             'hs9': {
-                titulo: 'Visa Cash App RB F1 Team (9)',
-                texto: 'Anteriormente conocido como AlphaTauri. Es el equipo "hermano" de Red Bull, sirviendo como equipo de desarrollo de jóvenes pilotos.',
-                imagen: 'images/visarb.png'
+                titulo: 'Visa Cash App ',
+                texto: 'Anteriormente conocido como AlphaTauri. Es el equipo "hermano" de Red Bull, sirviendo como equipo de desarrollo de jóvenes pilotos sus pilotos actuales son Liam Lawson	y Isack Hadjar.',
+                imagen: 'autovisa.jpg'
             }
         };
 
@@ -278,6 +309,17 @@
             const data = info[id];
             document.getElementById('titulo-info').textContent = data.titulo;
             document.getElementById('texto-info').textContent = data.texto;
+            document.getElementById('imagen-info').setAttribute('src', data.imagen);
+            document.getElementById('info-container').classList.remove('oculto');
+            document.getElementById('resultado').classList.add('oculto');
+        }
+        
+        function mostrarInstruccionesIniciales() {
+            document.getElementById('titulo-info').textContent = 'Instrucciones: Conoce las Escuderías';
+            document.getElementById('texto-info').textContent = 'Haz clic sobre los círculos numerados de los logos para ver la información de cada escudería. Luego, haz la prueba de conocimientos.';
+            document.getElementById('imagen-info').setAttribute('src', 'bandera.jpg');
+            document.getElementById('info-container').classList.remove('oculto');
+            document.getElementById('resultado').classList.add('oculto');
         }
 
         document.getElementById('hs1').onclick = function() { mostrarInfo('hs1'); };
@@ -290,49 +332,65 @@
         document.getElementById('hs8').onclick = function() { mostrarInfo('hs8'); };
         document.getElementById('hs9').onclick = function() { mostrarInfo('hs9'); };
 
-
         document.getElementById('instrucciones').onclick = function(){
             document.getElementById('titulo-info').textContent = 'Instrucciones';
             document.getElementById('texto-info').textContent = 'Haz clic sobre el logo de cada escudería para ver su información. Después, realiza el test de conocimientos.';
-            document.getElementById('imagen-info').setAttribute('src', 'images/hotspot-cursor.png');
+            document.getElementById('imagen-info').setAttribute('src', 'bandera.jpg');
+            document.getElementById('info-container').classList.remove('oculto');
+            document.getElementById('resultado').classList.add('oculto');
         };
 
-        document.getElementById('prueba').onclick = function(){
+        document.getElementById('prueba').onclick = iniciarFormulario;
+
+        function iniciarFormulario(){
             alert("Bienvenidos a la prueba de conocimientos de F1");
-            alert("Responde correctamente todas las preguntas para ganar");
+            alert("Responde correctamente todas las preguntas para ganar. ¡Son 9 preguntas!");
+            
             puntaje = 0; 
-
-            if(pregunta1 = prompt("¿Qué color es sinónimo de la escudería Ferrari?")){
-                pregunta1 = pregunta1.trim();
-            }
-            if (pregunta1.toLowerCase() === "rojo") {
-                alert("¡Correcto! El color de Ferrari es el rojo.");
-                puntaje += 1;
-            } else {
-                alert("Incorrecto. La respuesta correcta es: rojo.");
-            }
+            let respuesta;
             
-            if(pregunta2 = prompt("¿Cuál de estas escuderías tiene un toro en su logo (Red Bull o Williams)?")){
-                pregunta2 = pregunta2.trim();
-            }
-            if (pregunta2.toLowerCase() === "red bull") {
-                alert("¡Correcto! Red Bull tiene un toro.");
-                puntaje += 1;
-            } else {
-                alert("Incorrecto. La respuesta correcta es: Red Bull.");
-            }
+            respuesta = prompt(" ¿Qué equipo fue anteriormente conocido como Renault? (A:Alpine / B:Aston)");
+            if (respuesta && respuesta.trim().toLowerCase() === "alpine" || respuesta.trim().toLowerCase() === "a") { puntaje += 1; }
             
+            respuesta = prompt(" ¿El equipo Aston Martin compite con un característico color? (A:Verde / B:Amarillo)");
+            if (respuesta && respuesta.trim().toLowerCase() === "verde" || respuesta.trim().toLowerCase() === "a") { puntaje += 1; }
+            
+            respuesta = prompt(": ¿Haas es el único equipo con base en qué país? (A:Estados Unidos / B:Italia)");
+            if (respuesta && respuesta.trim().toLowerCase() === "estados unidos" || respuesta.trim().toLowerCase() === "a") { puntaje += 1; }
+            
+            respuesta = prompt(" ¿Cuál de estos colores es el principal de Mercedes? (A:Rojo / B:Plateado)");
+            if (respuesta && respuesta.trim().toLowerCase() === "plateado" || respuesta.trim().toLowerCase() === "b") { puntaje += 1; }
+            
+            respuesta = prompt(" ¿Cuál es el diseño más notable de Red Bull? (A:Agresivo / B:Clásico)");
+            if (respuesta && (respuesta.trim().toLowerCase() === "agresivo" || respuesta.trim().toLowerCase() === "agresivo y velocidad" || respuesta.trim().toLowerCase() === "a")) { puntaje += 1; }
 
+            respuesta = prompt(" ¿McLaren tiene base en...? (A:Reino Unido / B:estados unidos)");
+            if (respuesta && respuesta.trim().toLowerCase() === "Reino Unido" || respuesta.trim().toLowerCase() === "a") { puntaje += 1; }
+            
+            respuesta = prompt(" ¿Williams Racing se distingue por su color? (A=Azul oscuro / B=Verde claro)");
+            if (respuesta && respuesta.trim().toLowerCase() === "azul oscuro" || respuesta.trim().toLowerCase() === "a") { puntaje += 1; }
+
+            respuesta = prompt("¿La Scuderia Ferrari es sinónimo de qué color? (A=Rojo / B=Amarillo)");
+            if (respuesta && respuesta.trim().toLowerCase() === "rojo" || respuesta.trim().toLowerCase() === "a") { puntaje += 1; }
+
+            respuesta = prompt(" ¿Qué equipo era el 'hermano' de Red Bull, conocido anteriormente como? (A=AlphaTauri / B=Sauber)");
+            if (respuesta && (respuesta.trim().toLowerCase() === "alphatauri" || respuesta.trim().toLowerCase() === "a")) { puntaje += 1; }
+            
+            totalPreguntas = 9;
             document.getElementById("calif").textContent = puntaje + "/" + totalPreguntas;
-            document.getElementById("resultado").setAttribute("class", "visible");
+            document.getElementById('info-container').classList.add('oculto');
+            document.getElementById('resultado').classList.remove('oculto');
 
+            const tituloResultado = document.getElementById('resultado').querySelector('h2');
 
             if(puntaje === totalPreguntas) {
-                alert("¡Felicidades! Has respondido correctamente todas las preguntas.");
+                document.getElementById("imagen-resultado").setAttribute("src", "checo.jpg");
+                tituloResultado.textContent = "¡PERFECTO! has respondido correctamente el formulario:"; 
             } else {
-                alert("Has respondido " + puntaje + " preguntas correctamente de " + totalPreguntas + ". ¡Sigue intentando!");
+                document.getElementById("imagen-resultado").setAttribute("src", "choque.jpg");
+                tituloResultado.textContent = "Intenta de nuevo. Repasa la información:";
             }
-        };
+        }
     </script>
 </body>
 </html>
