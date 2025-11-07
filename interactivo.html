@@ -317,7 +317,7 @@
         function mostrarInstruccionesIniciales() {
             document.getElementById('titulo-info').textContent = 'Instrucciones: Conoce las Escuderías';
             document.getElementById('texto-info').textContent = 'Haz clic sobre los círculos numerados de los logos para ver la información de cada escudería. Luego, haz la prueba de conocimientos.';
-            document.getElementById('imagen-info').setAttribute('src', 'bandera.jpg');
+            document.getElementById('imagen-info').setAttribute('src', 'bandera.JPG');
             document.getElementById('info-container').classList.remove('oculto');
             document.getElementById('resultado').classList.add('oculto');
         }
@@ -335,7 +335,7 @@
         document.getElementById('instrucciones').onclick = function(){
             document.getElementById('titulo-info').textContent = 'Instrucciones';
             document.getElementById('texto-info').textContent = 'Haz clic sobre el logo de cada escudería para ver su información. Después, realiza el test de conocimientos.';
-            document.getElementById('imagen-info').setAttribute('src', 'bandera.jpg');
+            document.getElementById('imagen-info').setAttribute('src', 'bandera.JPG');
             document.getElementById('info-container').classList.remove('oculto');
             document.getElementById('resultado').classList.add('oculto');
         };
@@ -384,10 +384,10 @@
             const tituloResultado = document.getElementById('resultado').querySelector('h2');
 
             if(puntaje === totalPreguntas) {
-                document.getElementById("imagen-resultado").setAttribute("src", "checo.jpg");
+                document.getElementById("imagen-resultado").setAttribute("src", "checo.jpg  ");
                 tituloResultado.textContent = "¡PERFECTO! has respondido correctamente el formulario:"; 
             } else {
-                document.getElementById("imagen-resultado").setAttribute("src", "choque.jpg");
+                document.getElementById("imagen-resultado").setAttribute("src", "choque.JPG");
                 tituloResultado.textContent = "Intenta de nuevo. Repasa la información:";
             }
         }
