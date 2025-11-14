@@ -344,7 +344,7 @@
 
         function iniciarFormulario(){
             alert("Bienvenidos a la prueba de conocimientos de F1");
-            alert("Responde correctamente todas las preguntas para ganar. ¡Son 9 preguntas!");
+            alert("Responde correctamente todas las preguntas para ganar. ¡Son 10 preguntas!");
             
             puntaje = 0; 
             let respuesta;
@@ -376,7 +376,11 @@
             respuesta = prompt(" ¿Qué equipo era el 'hermano' de Red Bull, conocido anteriormente como? (A=AlphaTauri / B=Sauber)");
             if (respuesta && (respuesta.trim().toLowerCase() === "alphatauri" || respuesta.trim().toLowerCase() === "a")) { puntaje += 1; }
             
-            totalPreguntas = 9;
+            respuesta = prompt("¿Cuántos equipos compiten actualmente en la Fórmula 1? (A) 10 / B) 20)");
+            if (respuesta && (respuesta.trim().toLowerCase() === "10" || respuesta.trim().toLowerCase() === "a")) { puntaje += 1; }
+
+
+            totalPreguntas = 10;
             document.getElementById("calif").textContent = puntaje + "/" + totalPreguntas;
             document.getElementById('info-container').classList.add('oculto');
             document.getElementById('resultado').classList.remove('oculto');
